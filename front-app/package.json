@@ -1,0 +1,61 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "concurrently \"npm run react:start\" \"npm run electron:start\"",
+    "electron:start": "wait-on http://localhost:3000 && mode=dev electron .",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "build": "npm run react:build && electron-builder --publish=always"
+  },
+  "build": {
+    "appId": "com.example.electron-app",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react-helmet": "^6.1.6",
+    "concurrently": "^5.3.0",
+    "electron": "^11.2.2",
+    "electron-builder": "^23.0.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5",
+    "wait-on": "^5.2.1"
+  },
+  "homepage": "./",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.0",
+    "node-libs-browser": "^2.2.1",
+    "react-helmet": "^6.1.0",
+    "rsocket-core": "^1.0.0-alpha.3",
+    "rsocket-flowable": "^0.0.27",
+    "rsocket-types": "^0.0.27",
+    "rsocket-websocket-client": "^1.0.0-alpha.3"
+  }
+}
