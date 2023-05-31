@@ -7,7 +7,7 @@
 
 # 사용한 기술 스택
     Desktop App :
-        electron, react, typescript, javascript, rsocket
+        Electron, React, MUI, TypeScript, JavaScript, rSocket
 
     Server :
-        kotlin, springboot, webflux, coroutines, h2
+        Kotlin, SpringBoot, WebFlux, Coroutines, H2
