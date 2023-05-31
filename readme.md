@@ -6,28 +6,56 @@
 
 
 # 사용한 기술 스택
-    Desktop App:
-        Electron, React, MUI, TypeScript, JavaScript, rSocket
+Desktop App:
+    Electron, React, MUI, TypeScript, JavaScript, rSocket
 
-    Server:
-        Kotlin, SpringBoot, WebFlux, Coroutines, H2
+Server:
+    Kotlin, SpringBoot, WebFlux, Coroutines, H2
         
 ------
 
 # 기능, 구현 개요
 
 ### 클라이언트 사이드 기능
-    메인페이지:
-        입력폼을 통해 입력받은 닉네임이 비어있는지 검증한 뒤 브라우저 쿠키에 저장한 후 문제가 없다면 채팅페이지로 전환합니다.
-        
-    채팅페이지:
-        메시지 출력:
-            채팅페이지에 도달하면 React Hook API와 rSocket을 이용해 서버와 소켓연결을 시도합니다.
-            요청 스트림을 생성한뒤 서버에게 데이터를 요청하고 서버는 연속적인 응답 스트림을 반환합니다.
-            이후 구독 콜백을 등록한 뒤, 서버로부터 받은 데이터를 형식에 맞게 변환한 후 화면에 그립니다.
-            
-        메시지 전송:
-            입력폼을 통해 입력받은 대화내용을 전송버튼 혹은 엔터키 입력에 전송이벤트를 등록합니다.
-            이벤트가 트리거되면 메시지 데이터와 쿠키에 저장된 닉네임정보, 날짜를 JSON 형식으로 직렬화하여 RSocket 프로토콜의 메타데이터를 함께 서버로 전달합니다.
+#### 메인페이지:
+입력폼을 통해 입력받은 닉네임이 비어있는지 검증한 뒤 브라우저 쿠키에 저장한 후 문제가 없다면 채팅페이지로 전환합니다.
+    export default function App() {
+        const [alert, setAlert] = useState("none");
+        const [nickname, setNickname] = useState("");
+
+        const showAlert = (val) => {
+        setAlert(val);
+        };
+
+        return (
+            <Container maxWidth="sm" align="center">
+              <Box sx={{ my: 4 }} style={{ marginTop: "12rem" }}>
+                <Alert severity="error" style={{ display: alert }}>
+                  닉네임을 입력해주세요!
+                </Alert>
+                <Typography variant="h4" component="h1" gutterBottom>
+                  챗앱에 오신 것을 환영합니다 !
+                </Typography>
+                <NickNameField
+                  nickname={nickname}
+                  setNickname={setNickname}
+                  showAlert={showAlert}
+                />
+                <StartChatButton showAlert={showAlert} nickname={nickname} />
+                <CopyRight />
+              </Box>
+            </Container>
+        );
+    }
+
+#### 채팅페이지
+##### 메시지 출력
+채팅페이지에 도달하면 React Hook API와 rSocket을 이용해 서버와 소켓연결을 시도합니다.
+요청 스트림을 생성한뒤 서버에게 데이터를 요청하고 서버는 연속적인 응답 스트림을 반환합니다.
+이후 구독 콜백을 등록한 뒤, 서버로부터 받은 데이터를 형식에 맞게 변환한 후 화면에 그립니다.
+
+##### 메시지 전송
+입력폼을 통해 입력받은 대화내용을 전송버튼 혹은 엔터키 입력에 전송이벤트를 등록합니다.
+이벤트가 트리거되면 메시지 데이터와 쿠키에 저장된 닉네임정보, 날짜를 JSON 형식으로 직렬화하여 RSocket 프로토콜의 메타데이터를 함께 서버로 전달합니다.
             
 -------
