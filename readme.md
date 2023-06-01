@@ -85,8 +85,8 @@ Server:
       });
 
 ##### 메시지 전송
-입력폼을 통해 입력받은 대화내용을 전송버튼 혹은 엔터키 입력에 전송이벤트를 등록합니다.
-이벤트가 트리거되면 메시지 데이터와 쿠키에 저장된 닉네임정보, 날짜를 JSON 형식으로 직렬화하여 RSocket 프로토콜의 메타데이터를 함께 서버로 전달합니다.
+전송버튼과 엔터키 입력에 전송이벤트를 등록합니다.
+이벤트가 트리거되면 입력폼을 통해 입력된  쿠키에 저장된 닉네임정보, 날짜를 JSON 형식으로 직렬화하여 RSocket 프로토콜의 메타데이터를 함께 서버로 전달합니다.
 
     const sendMessageHandler = (content) => {
         rsocket
@@ -122,7 +122,7 @@ Server:
       setSendMessage(() => sendMessageHandler);
       
 ### 서버 사이드 기능
-##### 컨트롤러
+#### 컨트롤러
     @Controller
     @MessageMapping("api.v1.messages")
     class MessageResource(val messageService: MessageService) {
@@ -144,7 +144,7 @@ Server:
 onStart 함수는 클라이언트가 Flow를 수신하기 시작할 때 최근 메시지를 불러오게 합니다.
 두 번째 메서드인 send는 메시지 서비스를 통해 가져온 MessageVM 객체의 Flow를 리턴합니다.
 
-##### 서비스
+#### 서비스
 
     @Service
     class PersistentMessageService(val messageRepository: MessageRepository) : MessageService {
@@ -177,7 +177,7 @@ onStart 함수는 클라이언트가 Flow를 수신하기 시작할 때 최근 �
 
 네가지 메서드는 모두 messageRepository를 통해 데이터베이스에 접근합니다.
 
-### 리파지토리
+#### 리파지토리
     interface MessageRepository : CoroutineCrudRepository<Message, String> {
 
         // language=SQL
@@ -211,4 +211,16 @@ Coroutine을 사용하여 비동기 방식으로 데이터를 저장하고 가�
 
 -------
 
+## 프로젝트를 끝낸 뒤 소감
+평상시 관심이 많던 코틀린을 활용해서 스프링부트 프로젝트를 해보고 싶었습니다.
+스프링 홈페이지에서 코틀린을 활용한 튜토리얼을 찾다가 채팅서버를 만드는 튜토리얼이 있길래
+튜토리얼을 다 따라하고 난 후, 일렉트론과 리액트를 추가적으로 도입하여 데스크톱 앱으로 만들어 보았습니다.
 
+리액트를 사용해본 경험은 있지만 일렉트론은 거의 처음 사용해보았는데, 일렉트론 프로젝트안에 리액트를 추가할 때 특정 라이브러리도 사용해야하고 추가적으로 작업해야 할 환경셋팅들이 있었어서 조금 헤맸던 것 같습니다.
+그리고 간단하게 타입스크립트를 간단히 적용해보았는데 익숙하지 않은 탓에 소켓 연결하는 부분에선 비교적 익숙한 JS로 작성하였습니다.
+javaFX 이후론 데스크톱앱을 만들어 본 적이 없었는데 재미있는 경험이었다고 생각합니다.
+소켓통신도 처음 활용해보았는데 신기하고 재미있었습니다.
+
+코틀린은 JS에 비해 문법이 다양해서 러닝커브가 높다는 생각이 들었습니다.
+하지만 자바에 비해 더욱 유연하고 효율적으로 코딩할 수 있다는 점에선 충분히 매력적이라고 생각했습니다.
+앞으로 지속적으로 코틀린에 대해 학습해야 겠다는 생각이 들었습니다.
